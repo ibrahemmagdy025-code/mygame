@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الأسئلة العامة</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- شاشة تسجيل الدخول -->
+    <div id="login-screen" class="screen active">
+        <div class="login-container">
+            <h1>لعبة الأسئلة العامة</h1>
+            <p>سجل دخولك للبدء</p>
+            <button id="google-login-btn" class="btn btn-primary">
+                <span>تسجيل الدخول بـ Gmail</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- الواجهة الرئيسية -->
+    <div id="main-screen" class="screen">
+        <header class="header">
+            <div class="user-info">
+                <span id="judge-name">الحكم</span>
+                <button id="logout-btn" class="btn btn-secondary">تسجيل الخروج</button>
+            </div>
+        </header>
+        <main class="main-content">
+            <h2>الألعاب المتاحة</h2>
+            <div class="games-list">
+                <div class="game-card" data-game="quiz">
+                    <h3>لعبة الأسئلة العامة</h3>
+                    <p>لعبة أسئلة عامة - أول من يصل إلى 10 نقاط يفوز</p>
+                    <button class="btn btn-primary start-game-btn">بدء لعبة جديدة</button>
+                </div>
+            </div>
+            <div id="history-section" class="history-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3>التاريخ</h3>
+                    <button id="clear-history-btn" class="btn btn-danger" style="display: none;">🗑️ مسح التاريخ</button>
+                </div>
+                <div id="history-list" class="history-list"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- شاشة اختيار المواضيع -->
+    <div id="topics-screen" class="screen">
+        <header class="header">
+            <button id="back-to-main" class="btn btn-secondary">← العودة</button>
+            <h2>اختر المواضيع</h2>
+        </header>
+        <main class="main-content">
+            <div id="topics-list" class="topics-list"></div>
+            <button id="start-topics-btn" class="btn btn-primary" disabled>متابعة</button>
+        </main>
+    </div>
+
+    <!-- شاشة إدارة اللاعبين -->
+    <div id="players-screen" class="screen">
+        <header class="header">
+            <button id="back-to-topics" class="btn btn-secondary">← العودة</button>
+            <h2>إدارة اللاعبين</h2>
+        </header>
+        <main class="main-content">
+            <div class="add-player-section">
+                <input type="text" id="new-player-name" placeholder="اسم اللاعب الجديد" class="input">
+                <button id="add-player-btn" class="btn btn-primary">إضافة لاعب</button>
+            </div>
+            <div id="players-list" class="players-list"></div>
+            <button id="start-game-btn" class="btn btn-primary" disabled>بدء اللعبة</button>
+        </main>
+    </div>
+
+    <!-- شاشة اللعبة -->
+    <div id="game-screen" class="screen">
+        <header class="header">
+            <button id="close-game-btn" class="btn btn-danger">إغلاق اللعبة</button>
+            <h2>لعبة الأسئلة العامة</h2>
+        </header>
+        <main class="game-content">
+            <div class="question-section">
+                <div class="question-card">
+                    <h3 id="question-text">السؤال سيظهر هنا...</h3>
+                    <div class="answer-section">
+                        <p class="answer-label">الإجابة:</p>
+                        <p id="answer-text" class="answer-text">الإجابة ستظهر هنا...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button id="timer-btn" class="btn btn-secondary">⏱️ التايمر</button>
+                <!-- <button id="skip-question-btn" class="btn btn-secondary">⏭️ تخطي السؤال</button> -->
+                <button id="next-question-btn" class="btn btn-primary">السؤال التالي →</button>
+            </div>
+            <div class="players-score-section">
+                <h3>اللاعبين والنقاط</h3>
+                <div id="players-score-list" class="players-score-list"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Popup التايمر -->
+    <div id="timer-popup" class="popup">
+        <div class="popup-content">
+            <h3>التايمر</h3>
+            <div id="timer-display" class="timer-display">10</div>
+            <button id="close-timer-btn" class="btn btn-secondary">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- Popup الفائز -->
+    <div id="winner-popup" class="popup">
+        <div class="popup-content">
+            <h2>🎉 مبروك! 🎉</h2>
+            <p id="winner-name" class="winner-name"></p>
+            <p>فاز باللعبة!</p>
+            <button id="close-winner-btn" class="btn btn-primary">حسناً</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <!-- Application Scripts -->
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/questions-config.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/game.js"></script>
+    <script type="module" src="js/player.js"></script>
+    <script type="module" src="js/question.js"></script>
+    <script type="module" src="js/timer.js"></script>
+    <script type="module" src="js/score.js"></script>
+</body>
+</html>
+
